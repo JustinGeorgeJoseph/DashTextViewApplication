@@ -99,9 +99,6 @@ public class FloatingDashBorderTextView extends AppCompatTextView {
             typedArray.recycle();
         }
 
-        mDashWidth = 20;
-        mDashLength = 30;
-        mDashDistance = 60;
 
 
         mDashPaint = new Paint();
@@ -115,22 +112,11 @@ public class FloatingDashBorderTextView extends AppCompatTextView {
     @Override
     protected void onDraw(Canvas canvas) {
 
-
-        mDashPaint1 = new Paint();
-        mDashPaint1.setStyle(Paint.Style.STROKE);
-        mDashPaint1.setStrokeWidth(convertDpToPixel(mDashWidth,mContext));
-        mDashPaint1.setColor(Color.RED);
-       // canvas.drawRect(0, 0, getWidth(), getHeight(), mDashPaint1);
-
-
         mDashPaint.setPathEffect(new DashPathEffect(new float[]{convertDpToPixel(mDashLength,mContext),convertDpToPixel(mDashDistance,mContext)}, mPhase));
-        //canvas.drawPath(getPathValue(), mDashPaint);
-        canvas.drawRect(0, 0, getWidth(), getHeight(), mDashPaint);
+        canvas.drawPath(getPathValue(), mDashPaint);
 
-
-
-        if (mFloatDash)
-        postInvalidate();
+            if (mFloatDash)
+            postInvalidate();
         super.onDraw(canvas);
     }
 
@@ -140,28 +126,13 @@ public class FloatingDashBorderTextView extends AppCompatTextView {
         } else {
             mPhase++;
         }
-        Log.d("TAG_JUSTIN","------------------------------------------------------------------------------------> ");
-        Log.d("TAG_JUSTIN","Values --> "+getWidth());
 
         Path path = new Path();
-
-        path.moveTo(0,convertDpToPixel(mDashWidth,mContext));
-        Log.d("TAG_JUSTIN","path 1 --->   0 : "+ convertDpToPixel(mDashWidth,mContext));
-
+        path.moveTo(0,0);
         path.lineTo(getMeasuredWidth(),0);
-        Log.d("TAG_JUSTIN","path 2 --->   "+(getMeasuredWidth())+" : "+ convertDpToPixel(mDashWidth,mContext));
-
-/*
-        path.lineTo(getMeasuredWidth()-((int)mDashWidth/2),getMeasuredHeight()-((int)mDashWidth/2));
-        Log.d("TAG_JUSTIN","path 3 --->   "+(getMeasuredWidth()-((int)mDashWidth/2))+" : "+ (getMeasuredHeight()-((int)mDashWidth/2)));
-
-        path.lineTo(((int)mDashWidth/2),getMeasuredHeight()-((int)mDashWidth/2));
-        Log.d("TAG_JUSTIN","path 4 --->   "+(((int)mDashWidth/2))+" : "+ (getMeasuredHeight()-((int)mDashWidth/2)));
-
-        path.lineTo(((int)mDashWidth/2),0);
-        Log.d("TAG_JUSTIN","path 5 --->   "+(((int)mDashWidth/2))+" : 0" );*/
-
-
+        path.lineTo(getMeasuredWidth(),getMeasuredHeight());
+        path.lineTo(0,getMeasuredHeight());
+        path.lineTo(0,0);
         return path;
     }
 
